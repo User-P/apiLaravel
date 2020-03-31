@@ -19,10 +19,11 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description',1000);
             $table->integer('quantity')->unsigned();
-            $table->string('status')->default(Product::PRODUCTO_NO_DISPONIBLE);
+            $table->string('status')->default(Product::NOT_AVAILABLE);
             $table->string('image');
             $table->foreignId('seller_id')->references('id')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

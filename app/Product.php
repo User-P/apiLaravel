@@ -2,12 +2,18 @@
 
 namespace App;
 
+use App\Seller;
+use App\Category;
+use App\Transaction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    const PRODUCTO_DISPONIBLE = 'disponible';
-    const PRODUCTO_NO_DISPONIBLE = 'no disponible';
+    use SoftDeletes;
+
+    const AVAILABLE = 'disponible';
+    const NOT_AVAILABLE = 'no disponible';
 
     protected $fillable =[
         'name',
@@ -17,9 +23,15 @@ class Product extends Model
         'image',
         'seller_id',
     ];
+    protected $dates = ['deleted_at'];
 
-    public function estaDisponible(){
-        return $this->status == Product::PRODUCTO_DISPONIBLE;
+    protected $hidden = [
+        'pivot'
+    ];
+
+
+    public function available(){
+        return $this->status == Product::AVAILABLE;
     }
 
     public function categories()
