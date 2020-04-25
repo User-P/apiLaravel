@@ -54,7 +54,7 @@ class UserController extends ApiController
         $user = User::create($data);
 
         //return response()->json(['data' => $user], 201);
-        return $this -> showOne($user,201);
+        return $this->showOne($user, 201);
     }
 
     /**
@@ -112,9 +112,9 @@ class UserController extends ApiController
         }
 
         if ($request->has('admin')) {
-            if (!$user->esVerificado()) {
-               return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar sus privilegios a administrador', 409);
-               //return response()->json(['error'=> 'Unicamente los usuarios verificados pueden cambiar sus privilegios a administrador', 'code', 409],409);
+            if (!$user->verified()) {
+                return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar sus privilegios a administrador', 409);
+                //return response()->json(['error'=> 'Unicamente los usuarios verificados pueden cambiar sus privilegios a administrador', 'code', 409],409);
             }
             $user->admin = $request->admin;
         }

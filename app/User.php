@@ -17,14 +17,14 @@ class User extends Authenticatable
      * @var array
      */
 
-     const USUARIO_VERIFICADO = '1';
-     const USUARIO_NO_VERIFICADO = '0';
+    const USUARIO_VERIFICADO = '1';
+    const USUARIO_NO_VERIFICADO = '0';
 
-     const USUARIO_ADMINISTRADOR= 'true';
-     const USUARIO_REGULAR= 'false';
+    const USUARIO_ADMINISTRADOR = 'true';
+    const USUARIO_REGULAR = 'false';
 
-     protected $table = 'users';
-     protected $dates = ['deleted_at'];
+    protected $table = 'users';
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'name',
@@ -35,15 +35,18 @@ class User extends Authenticatable
         'admin',
     ];
 
-    public function setNameAttribute($value){
-        $this -> attributes['name'] = strtolower($value);
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
     }
 
-    public function setEmailAttribute($value){
-        $this -> attributes['email'] = strtolower($value);
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
     }
 
-    public function getNameAttribute($value){
+    public function getNameAttribute($value)
+    {
         return ucwords($value);
     }
 
@@ -67,15 +70,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function esVerificado(){
+    public function verified()
+    {
         return $this->verified == User::USUARIO_VERIFICADO;
     }
 
-    public function esAdministrador(){
+    public function administrator()
+    {
         return $this->admin == User::USUARIO_ADMINISTRADOR;
     }
 
-    public static function generarVerificacionToken(){
+    public static function generarVerificacionToken()
+    {
         return Str::random(40);
     }
 }
