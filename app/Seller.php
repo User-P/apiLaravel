@@ -4,6 +4,7 @@ namespace App;
 
 use App\Product;
 use App\Scoopes\SellerScoope;
+use App\Transformers\SellerTransformer;
 
 class Seller extends User
 {
@@ -17,4 +18,6 @@ class Seller extends User
     {
         return $this->hasMany(Product::class);
     }
+
+    public $transformer = SellerTransformer::class;
 }

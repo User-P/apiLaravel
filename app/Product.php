@@ -5,6 +5,7 @@ namespace App;
 use App\Seller;
 use App\Category;
 use App\Transaction;
+use App\Transformers\ProductTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,7 +16,10 @@ class Product extends Model
     const AVAILABLE = 'disponible';
     const NOT_AVAILABLE = 'no disponible';
 
-    protected $fillable =[
+    public $transformer = ProductTransformer::class;
+
+
+    protected $fillable = [
         'name',
         'description',
         'quantity',
@@ -30,7 +34,8 @@ class Product extends Model
     ];
 
 
-    public function available(){
+    public function available()
+    {
         return $this->status == Product::AVAILABLE;
     }
 

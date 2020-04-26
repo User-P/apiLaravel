@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Category;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Transformers\CategoryTransformer;
 
 class CategoryController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->middleware('transform.input:' . CategoryTransformer::class)->only(['store', 'update']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,7 @@ class CategoryController extends ApiController
     public function index()
     {
         $categories = Category::all();
-        return $this->showAll($categories);//return response()->json(['data' => $users], 200);
+        return $this->showAll($categories); //return response()->json(['data' => $users], 200);
 
     }
 
@@ -66,8 +72,8 @@ class CategoryController extends ApiController
             'description'
         ]));
 
-        if($category->isClean()){
-            return $this->errorResponse('Debe especificar al menos un valor diferente para actualizar.',422);
+        if ($category->isClean()) {
+            return $this->errorResponse('Debe especificar al menos un valor diferente para actualizar.', 422);
         }
 
         $category->save();
