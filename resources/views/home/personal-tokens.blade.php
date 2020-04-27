@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="justify-content-center">
         <passport-personal-access-tokens></passport-personal-access-tokens>
     </div>
 </div>
