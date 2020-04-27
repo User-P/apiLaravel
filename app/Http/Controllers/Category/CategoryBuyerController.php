@@ -7,6 +7,10 @@ use App\Http\Controllers\ApiController;
 
 class CategoryBuyerController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,15 +19,14 @@ class CategoryBuyerController extends ApiController
     public function index(Category $category)
     {
         $buyers = $category->products()
-        ->whereHas('transactions')
-        ->with('transactions.buyer')
-        ->get()
-        ->pluck('transactions')
-        ->collapse()
-        ->unique()
-        ->values();
+            ->whereHas('transactions')
+            ->with('transactions.buyer')
+            ->get()
+            ->pluck('transactions')
+            ->collapse()
+            ->unique()
+            ->values();
 
         return $this->showAll($buyers);
     }
-
 }

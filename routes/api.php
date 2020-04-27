@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,3 +44,6 @@ Route::resource('products.buyers.transactions', 'Product\ProductBuyerTransaction
 Route::resource('transactions', 'Transaction\TransactionController', ['only' => ['index', 'show']]);
 Route::resource('transactions.categories', 'Transaction\TransactionCategoryController', ['only' => ['index']]);
 Route::resource('transactions.sellers', 'Transaction\TransactionSellerController', ['only' => ['index', 'show']]);
+
+
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken')->name('passport.token');

@@ -7,6 +7,10 @@ use App\Transaction;
 
 class TransactionSellerController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,5 +21,4 @@ class TransactionSellerController extends ApiController
         $seller = $transaction->product->seller;
         return $this->showOne($seller);
     }
-
 }

@@ -7,6 +7,10 @@ use App\Http\Controllers\ApiController;
 
 class BuyerProductController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,11 +19,10 @@ class BuyerProductController extends ApiController
     public function index(Buyer $buyer)
     {
         $products = $buyer->transactions()
-        ->with('product')
-        ->get()
-        ->pluck('product');
+            ->with('product')
+            ->get()
+            ->pluck('product');
 
         return $this->showAll($products);
     }
-
 }
