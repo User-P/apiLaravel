@@ -40,9 +40,10 @@ class UserController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function me(Request $request)
     {
-        //
+        $user = $request->user();
+        return $this->showOne($user);
     }
 
     /**

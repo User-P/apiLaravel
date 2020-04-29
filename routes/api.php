@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //USERS
+Route::name('me')->get('users/me', 'User\UserController@me');
 Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
 Route::name('verify')->get('users/verify/{token}', 'User\UserController@verify');
 Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
+
 
 //BUYER
 Route::resource('buyers', 'Buyer\BuyerController', ['only' => ['index', 'show']]);
