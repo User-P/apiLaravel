@@ -18,6 +18,11 @@ class UserController extends ApiController
         $this->middleware('auth:api')->except(['store', 'resend', 'verify']);
         $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:manage-account')->only(['show', 'update']);
+        $this->middleware('can:view,user')->only('show');
+        $this->middleware('can:update,user')->only('update');
+=
+        $this->middleware('can:delete,user')->only('destroy');
+
     }
     /**
      * Display a listing of the resource.
@@ -26,6 +31,8 @@ class UserController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $users = User::all();
         return $this->showAll($users);         //return response()->json(['data' => $users], 200);
     }
@@ -100,6 +107,7 @@ class UserController extends ApiController
      */
     public function update(Request $request, User $user) //inyeccion implicita
     {
+
         $reglas = [
             'email' => 'email|unique:users,email,' . $user->id,
             'password' => 'min:6|confirmed',
@@ -123,6 +131,7 @@ class UserController extends ApiController
         }
 
         if ($request->has('admin')) {
+            $this->allowedAdminAction();
             if (!$user->verified()) {
                 return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar sus privilegios a administrador', 409);
                 //return response()->json(['error'=> 'Unicamente los usuarios verificados pueden cambiar sus privilegios a administrador', 'code', 409],409);
